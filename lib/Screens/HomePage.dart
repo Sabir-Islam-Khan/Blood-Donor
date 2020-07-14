@@ -24,24 +24,41 @@ class _HomePageState extends State<HomePage> {
     double totalWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          height: totalHeight * 1,
-          width: totalWidth * 1,
-          color: Colors.amberAccent,
-          child: Center(
-              child: Container(
-            height: totalHeight * 0.2,
-            width: totalWidth * 0.3,
-            child: RaisedButton(
-              color: Colors.white,
-              onPressed: () {
-                _signOut();
-              },
-              child: Center(
-                child: Text("Logout"),
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: <Color>[
+                  Color.fromRGBO(239, 44, 120, 1),
+                  Color.fromRGBO(237, 66, 101, 1),
+                  Color.fromRGBO(239, 79, 79, 1),
+                ],
               ),
             ),
-          )),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            height: totalHeight * 1,
+            width: totalWidth * 1,
+            color: Colors.grey[200],
+            child: Center(
+                child: Container(
+              height: totalHeight * 0.2,
+              width: totalWidth * 0.3,
+              child: RaisedButton(
+                color: Colors.white,
+                onPressed: () {
+                  _signOut();
+                },
+                child: Center(
+                  child: Text("Logout"),
+                ),
+              ),
+            )),
+          ),
         ),
       ),
     );

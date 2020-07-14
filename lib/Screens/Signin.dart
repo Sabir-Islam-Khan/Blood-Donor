@@ -1,3 +1,4 @@
+import 'package:blood_donation/Animations/FadeAnimation.dart';
 import 'package:blood_donation/Screens/Loading.dart';
 import 'package:blood_donation/Services/LandingPage.dart';
 import 'package:flutter/material.dart';
@@ -141,32 +142,38 @@ class _SignInState extends State<SignIn> {
                         height: totalHeight * 0.18,
                       ),
                       // sign in button
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: totalWidth * 0.05,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Welcome",
-                            style: GoogleFonts.meriendaOne(
-                              color: Colors.white,
-                              fontSize: totalHeight * 0.045,
+                      FadeIn(
+                        0.5,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.05,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Welcome",
+                              style: GoogleFonts.meriendaOne(
+                                color: Colors.white,
+                                fontSize: totalHeight * 0.045,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: totalWidth * 0.08,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Give the gift of life !",
-                            style: GoogleFonts.meriendaOne(
-                              color: Colors.grey[200],
-                              fontSize: totalHeight * 0.023,
+                      FadeIn(
+                        0.9,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.08,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Give the gift of life !",
+                              style: GoogleFonts.meriendaOne(
+                                color: Colors.grey[200],
+                                fontSize: totalHeight * 0.023,
+                              ),
                             ),
                           ),
                         ),
@@ -176,25 +183,28 @@ class _SignInState extends State<SignIn> {
                         height: totalHeight * 0.035,
                       ),
                       // textfiled for email
-                      Container(
-                        width: totalWidth * 0.9,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
+                      FadeIn(
+                        1.3,
+                        Container(
+                          width: totalWidth * 0.9,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                labelText: "Email",
+                                labelStyle: TextStyle(
                                   color: Colors.white,
                                 ),
-                              ),
-                              labelText: "Email",
-                              labelStyle: TextStyle(
-                                color: Colors.white,
-                              ),
-                              hintText: "Enter your email",
-                              hintStyle: TextStyle(
-                                color: Colors.grey[200],
-                              )),
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
+                                hintText: "Enter your email",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[200],
+                                )),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
+                          ),
                         ),
                       ),
 
@@ -202,62 +212,68 @@ class _SignInState extends State<SignIn> {
                         height: totalHeight * 0.01,
                       ),
                       // textfield for password
-                      Container(
-                        width: totalWidth * 0.9,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
+                      FadeIn(
+                        1.7,
+                        Container(
+                          width: totalWidth * 0.9,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              labelText: "Password",
+                              labelStyle: TextStyle(
                                 color: Colors.white,
                               ),
+                              hintText: "Enter your password",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                              ),
                             ),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: "Enter your password",
-                            hintStyle: TextStyle(
-                              color: Colors.grey[200],
-                            ),
+                            controller: passwordController,
+                            obscureText: true,
                           ),
-                          controller: passwordController,
-                          obscureText: true,
                         ),
                       ),
                       SizedBox(
                         height: totalHeight * 0.05,
                       ),
-                      Center(
-                        // sign in button
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              loading = true;
-                            });
-                            String mail = emailController.value.text;
-                            String password = passwordController.value.text;
+                      FadeIn(
+                        2.1,
+                        Center(
+                          // sign in button
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                loading = true;
+                              });
+                              String mail = emailController.value.text;
+                              String password = passwordController.value.text;
 
-                            _signInWithEmail(mail, password);
+                              _signInWithEmail(mail, password);
 
-                            emailController.clear();
-                            passwordController.clear();
-                          },
-                          child: Container(
-                            // container for button
-                            height: totalHeight * 0.07,
-                            width: totalWidth * 0.7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text(
-                                // button text
-                                "Sign in",
-                                style: GoogleFonts.meriendaOne(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
+                              emailController.clear();
+                              passwordController.clear();
+                            },
+                            child: Container(
+                              // container for button
+                              height: totalHeight * 0.07,
+                              width: totalWidth * 0.7,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  // button text
+                                  "Sign in",
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -274,11 +290,14 @@ class _SignInState extends State<SignIn> {
                           SizedBox(
                             width: totalWidth * 0.2,
                           ),
-                          Text(
-                            "Don't have an account ?  ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: totalWidth * 0.04,
+                          FadeIn(
+                            2.5,
+                            Text(
+                              "Don't have an account ?  ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: totalWidth * 0.04,
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -292,13 +311,16 @@ class _SignInState extends State<SignIn> {
                                 ),
                               );
                             },
-                            child: Text(
-                              "Create One",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: totalWidth * 0.04,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
+                            child: FadeIn(
+                              3.0,
+                              Text(
+                                "Create One",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: totalWidth * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ),

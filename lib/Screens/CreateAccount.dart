@@ -1,3 +1,4 @@
+import 'package:blood_donation/Animations/FadeAnimation.dart';
 import 'package:blood_donation/Screens/Loading.dart';
 import 'package:blood_donation/Screens/Signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -72,106 +73,121 @@ class _CreateAccountState extends State<CreateAccount> {
                         height: totalHeight * 0.15,
                       ),
                       // sign in button
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: totalWidth * 0.06,
-                        ),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Join Us !",
-                            style: GoogleFonts.meriendaOne(
-                              color: Colors.white,
-                              fontSize: totalHeight * 0.05,
+                      FadeIn(
+                        0.5,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.06,
+                          ),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Join Us !",
+                              style: GoogleFonts.meriendaOne(
+                                color: Colors.white,
+                                fontSize: totalHeight * 0.05,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: totalWidth * 0.08,
-                          bottom: totalHeight * 0.03,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Make a difference !",
-                            style: GoogleFonts.meriendaOne(
-                              color: Colors.grey[200],
-                              fontSize: totalHeight * 0.023,
+                      FadeIn(
+                        0.9,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.08,
+                            bottom: totalHeight * 0.03,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Make a difference !",
+                              style: GoogleFonts.meriendaOne(
+                                color: Colors.grey[200],
+                                fontSize: totalHeight * 0.023,
+                              ),
                             ),
                           ),
                         ),
                       ),
 
                       // textfield for name
-                      Container(
-                        width: totalWidth * 0.9,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                              color: Colors.white,
-                            )),
-                            labelText: 'Name',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
+                      FadeIn(
+                        1.3,
+                        Container(
+                          width: totalWidth * 0.9,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
+                              labelText: 'Name',
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: "Enter your name",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                              ),
                             ),
-                            hintText: "Enter your name",
-                            hintStyle: TextStyle(
-                              color: Colors.grey[200],
-                            ),
+                            controller: nameController,
                           ),
-                          controller: nameController,
                         ),
                       ),
                       SizedBox(
                         height: totalHeight * 0.01,
                       ),
                       // textfiled for email
-                      Container(
-                        width: totalWidth * 0.9,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                              color: Colors.white,
-                            )),
-                            labelText: 'Email',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
+                      FadeIn(
+                        1.7,
+                        Container(
+                          width: totalWidth * 0.9,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
+                              labelText: 'Email',
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: "Enter your email",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                              ),
                             ),
-                            hintText: "Enter your email",
-                            hintStyle: TextStyle(
-                              color: Colors.grey[200],
-                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
                           ),
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
                         ),
                       ),
 
                       // textfield for password
-                      Container(
-                        width: totalWidth * 0.9,
-                        child: TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
+                      FadeIn(
+                        2.1,
+                        Container(
+                          width: totalWidth * 0.9,
+                          child: TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(
                                 color: Colors.white,
                               ),
+                              hintText: "Minuimum 6 digit password",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                              ),
                             ),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: "Minuimum 6 digit password",
-                            hintStyle: TextStyle(
-                              color: Colors.grey[200],
-                            ),
+                            controller: passwordController,
                           ),
-                          controller: passwordController,
                         ),
                       ),
                       SizedBox(
@@ -261,22 +277,25 @@ class _CreateAccountState extends State<CreateAccount> {
                             passwordController.clear();
                             nameController.clear();
                           },
-                          child: Container(
-                            // container for the button
-                            height: totalHeight * 0.07,
-                            width: totalWidth * 0.7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              // button text
-                              child: Text(
-                                "Sign up",
-                                style: GoogleFonts.meriendaOne(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
+                          child: FadeIn(
+                            2.5,
+                            Container(
+                              // container for the button
+                              height: totalHeight * 0.07,
+                              width: totalWidth * 0.7,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                // button text
+                                child: Text(
+                                  "Sign up",
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -292,11 +311,14 @@ class _CreateAccountState extends State<CreateAccount> {
                           SizedBox(
                             width: totalWidth * 0.2,
                           ),
-                          Text(
-                            "Already have an account ?  ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: totalWidth * 0.04,
+                          FadeIn(
+                            3.0,
+                            Text(
+                              "Already have an account ?  ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: totalWidth * 0.04,
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -308,13 +330,16 @@ class _CreateAccountState extends State<CreateAccount> {
                                 ),
                               );
                             },
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: totalWidth * 0.04,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
+                            child: FadeIn(
+                              3.5,
+                              Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: totalWidth * 0.04,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ),

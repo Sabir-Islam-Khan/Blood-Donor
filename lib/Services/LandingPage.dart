@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Screens/HomePage.dart';
 import '../Screens/Signin.dart';
 import '../Services/Auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LandingPage extends StatelessWidget {
   // authbase instance
@@ -21,11 +20,11 @@ class LandingPage extends StatelessWidget {
 
           if (user == null) {
             return SignIn(
-              auth: auth,
+              auth: this.auth,
             );
           }
           return HomePage(
-            auth: auth,
+            auth: this.auth,
           );
         } else {
           return Scaffold(

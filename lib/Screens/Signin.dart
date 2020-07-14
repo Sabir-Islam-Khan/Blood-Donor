@@ -29,21 +29,21 @@ class _SignInState extends State<SignIn> {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
-    try {
-      await widget.auth.signInWithGoogle();
-    } catch (e) {
-      print("Error in google sign in \n $e");
-    }
-  }
+//  Future<void> _signInWithGoogle() async {
+//     try {
+//       await widget.auth.signInWithGoogle();
+//     } catch (e) {
+//       print("Error in google sign in \n $e");
+//     }
+//   }
 
-  Future<void> _signInWithFacebook() async {
-    try {
-      await widget.auth.signInWithFacebook();
-    } catch (e) {
-      print("Error in Facebook login \n $e");
-    }
-  }
+  // Future<void> _signInWithFacebook() async {
+  //   try {
+  //     await widget.auth.signInWithFacebook();
+  //   } catch (e) {
+  //     print("Error in Facebook login \n $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -158,41 +158,6 @@ class _SignInState extends State<SignIn> {
 
               SizedBox(
                 height: totalHeight * 0.02,
-              ),
-
-              Text(
-                "Or",
-                style: TextStyle(
-                  color: Colors.indigo,
-                  fontSize: 16.0,
-                ),
-              ),
-
-              SizedBox(
-                height: totalHeight * 0.02,
-              ),
-
-              Row(
-                children: [
-                  SizedBox(
-                    width: totalWidth * 0.4,
-                  ),
-                  GestureDetector(
-                    onTap: _signInWithGoogle,
-                    child: Image(
-                      image: AssetImage("assets/images/googleLogo.png"),
-                    ),
-                  ),
-                  SizedBox(
-                    width: totalWidth * 0.07,
-                  ),
-                  GestureDetector(
-                    onTap: _signInWithFacebook,
-                    child: Image(
-                      image: AssetImage("assets/images/facebookLogo.png"),
-                    ),
-                  ),
-                ],
               ),
 
               SizedBox(

@@ -1,5 +1,6 @@
 import 'package:blood_donation/Screens/Loading.dart';
 import 'package:blood_donation/Screens/Signin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/Auth.dart';
@@ -21,6 +22,20 @@ class _CreateAccountState extends State<CreateAccount> {
   final nameController = TextEditingController();
 
   bool isLoading = false;
+  void createData(String name, String email) async {
+    Auth _auth = Auth();
+
+    User _user = await _auth.currentUser();
+
+    await Firestore.instance.collection('Users').document(_user.uid).setData(
+      {
+        'name': name,
+        'email': email,
+        'isRegestered': false,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // toal height and width contrans
@@ -151,7 +166,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             labelStyle: TextStyle(
                               color: Colors.white,
                             ),
-                            hintText: "Password should be more than 6 digit",
+                            hintText: "Minuimum 6 digit password",
                             hintStyle: TextStyle(
                               color: Colors.grey[200],
                             ),
@@ -200,6 +215,8 @@ class _CreateAccountState extends State<CreateAccount> {
                                   ],
                                 ).show();
                               } else {
+                                // creates initial data on db when successful
+
                                 // goes to landing page after succesful
                                 Navigator.push(
                                   context,
@@ -210,6 +227,10 @@ class _CreateAccountState extends State<CreateAccount> {
                                       email: mail.toUpperCase(),
                                     ),
                                   ),
+                                );
+                                createData(
+                                  nameController.value.text,
+                                  emailController.value.text,
                                 );
                               }
                             } catch (e) {

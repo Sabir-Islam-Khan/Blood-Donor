@@ -29,8 +29,8 @@ class Loading extends StatelessWidget {
             value: 0.5, // Defaults to 0.5.
             valueColor: AlwaysStoppedAnimation(
                 Colors.pink), // Defaults to the current Theme's accentColor.
-            backgroundColor: Colors.lightBlue[
-                300], // Defaults to the current Theme's backgroundColor.
+            backgroundColor: Colors
+                .grey[400], // Defaults to the current Theme's backgroundColor.
             direction: Axis
                 .horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
             center: Text(

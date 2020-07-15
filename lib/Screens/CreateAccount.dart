@@ -326,7 +326,9 @@ class _CreateAccountState extends State<CreateAccount> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SignIn(auth: null),
+                                  builder: (context) => SignIn(
+                                    auth: widget.auth,
+                                  ),
                                 ),
                               );
                             },

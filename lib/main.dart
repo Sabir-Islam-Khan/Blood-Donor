@@ -6,15 +6,11 @@ void main() {
   runApp(BloodDonation());
 }
 
-class BloodDonation extends StatefulWidget {
-  @override
-  _BloodDonationState createState() => _BloodDonationState();
-}
-
-class _BloodDonationState extends State<BloodDonation> {
+class BloodDonation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: LandingPage(
           auth: Auth(),

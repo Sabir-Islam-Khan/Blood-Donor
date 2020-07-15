@@ -126,7 +126,7 @@ class _CreateAccountState extends State<CreateAccount> {
                               labelStyle: TextStyle(
                                 color: Colors.white,
                               ),
-                              hintText: "Enter your name",
+                              hintText: "Name CAN'T be changed later",
                               hintStyle: TextStyle(
                                 color: Colors.grey[200],
                               ),

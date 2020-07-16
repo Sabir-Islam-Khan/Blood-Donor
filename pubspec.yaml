@@ -37,6 +37,8 @@ dependencies:
   simple_animations: ^2.2.1
   flutter_native_splash: ^0.1.9
   page_transition: ^1.1.5
+  firebase_storage: ^3.1.6
+  flutter_rounded_date_picker: ^1.0.0
 flutter_native_splash:
   image: assets/images/splash.png
   fill: true
@@ -62,7 +64,7 @@ flutter:
     - assets/images/googleLogo.png
     - assets/images/facebookLogo.png
     - assets/images/donor.png
-
+    - assets/images/avatar.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -14,9 +14,10 @@ class BloodDonation extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: LandingPage(
-        auth: Auth(),
-      )),
+        body: LandingPage(
+          auth: Auth(),
+        ),
+      ),
     );
   }
 }

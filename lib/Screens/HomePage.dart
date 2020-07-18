@@ -11,14 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<void> _signOut() async {
-    try {
-      await widget.auth.signOut();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // total height and width constrains
@@ -58,19 +50,18 @@ class _HomePageState extends State<HomePage> {
             width: totalWidth * 1,
             color: Colors.grey[200],
             child: Center(
-                child: Container(
-              height: totalHeight * 0.2,
-              width: totalWidth * 0.3,
-              child: RaisedButton(
-                color: Colors.white,
-                onPressed: () {
-                  _signOut();
-                },
-                child: Center(
-                  child: Text("Logout"),
+              child: Container(
+                height: totalHeight * 0.2,
+                width: totalWidth * 0.3,
+                child: RaisedButton(
+                  color: Colors.white,
+                  onPressed: () {},
+                  child: Center(
+                    child: Text("Logout"),
+                  ),
                 ),
               ),
-            )),
+            ),
           ),
         ),
       ),

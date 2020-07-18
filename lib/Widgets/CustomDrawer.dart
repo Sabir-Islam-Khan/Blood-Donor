@@ -12,6 +12,14 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+  Future<void> _signOut() async {
+    try {
+      await widget.auth.signOut();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double totalHeight = MediaQuery.of(context).size.height;
@@ -83,6 +91,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(
+                height: totalHeight * 0.2,
+              ),
+              GestureDetector(
+                onTap: () {
+                  _signOut();
+                },
+                child: Container(
+                  height: totalHeight * 0.06,
+                  width: totalWidth * 0.4,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Logout",
+                      style: GoogleFonts.meriendaOne(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textScaleFactor: 1.1,
+                    ),
+                  ),
                 ),
               ),
             ],

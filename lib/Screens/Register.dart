@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final Auth auth;
@@ -48,6 +49,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void registerUser() async {
     User _user = await widget.auth.currentUser();
     String _uid = _user.uid;
+    String lastDonationDate =
+        "${_chosenDate.day}-${_chosenDate.month}-${_chosenDate.year}";
     print("UID IS ******* $_uid");
     setState(() {
       _isLoading = true;
@@ -60,7 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       "profilePic": downloadUrl,
       "bloodGroup": _chosenBloodGroup,
       "totalDonations": _chosenDonations,
-      "lastDonation": _chosenDate,
+      "lastDonation": lastDonationDate,
       "location": _chosenThana,
       "name": name,
     });
@@ -76,6 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   int _chosenDonations = 0;
   String _chosenThana;
   bool isRegistered;
+  final numberController = TextEditingController();
   void getData() async {
     setState(() {
       _isLoading = true;
@@ -260,438 +264,566 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             : isRegistered == true
                 ? RegisterAnimation()
                 : SingleChildScrollView(
-                    child: Container(
-                      height: totalHeight * 1,
-                      width: totalWidth * 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            height: totalHeight * 0.03,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: totalHeight * 0.03,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.04,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: totalWidth * 0.04,
-                            ),
-                            child: Text(
-                              "Name :",
-                              style: GoogleFonts.meriendaOne(
-                                color: Colors.black,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          child: Text(
+                            "Name :",
+                            style: GoogleFonts.meriendaOne(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
-                            height: totalHeight * 0.004,
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.004,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.08,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: totalWidth * 0.08,
-                            ),
-                            child: name == null
-                                ? Text(
-                                    "Fetching Data...",
-                                    style: GoogleFonts.meriendaOne(
-                                      color: Color.fromRGBO(239, 44, 120, 1),
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                : Text(
-                                    name,
-                                    style: GoogleFonts.meriendaOne(
-                                      color: Color.fromRGBO(239, 44, 120, 1),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: totalWidth * 0.04,
-                            ),
-                            child: Text(
-                              "Select Profile Picture :",
-                              style: GoogleFonts.meriendaOne(
-                                color: Color.fromRGBO(239, 44, 120, 1),
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Center(
-                            child: _image == null
-                                ? ClipOval(
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 220.0,
-                                          width: 220.0,
-                                          child: Image(
-                                            image: AssetImage(
-                                                'assets/images/avatar.png'),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: totalHeight * 0.0,
-                                          child: Opacity(
-                                            opacity: 0.9,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 40.0,
-                                                  width: 220.0,
-                                                  color: Color.fromRGBO(
-                                                      239, 44, 120, 1),
-                                                ),
-                                                Positioned(
-                                                  bottom: 3,
-                                                  left: 95,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      getImage();
-                                                    },
-                                                    child: Icon(
-                                                      Icons.camera,
-                                                      color: Colors.white,
-                                                      size: 35,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : ClipOval(
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 220.0,
-                                          width: 220.0,
-                                          child: FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Image.file(_image),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: totalHeight * 0.0,
-                                          child: Opacity(
-                                            opacity: 0.9,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: 40.0,
-                                                  width: 220.0,
-                                                  color: Color.fromRGBO(
-                                                      239, 44, 120, 1),
-                                                ),
-                                                Positioned(
-                                                  bottom: 3,
-                                                  left: 95,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      getImage();
-                                                    },
-                                                    child: Icon(
-                                                      Icons.camera,
-                                                      color: Colors.white,
-                                                      size: 35,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: totalWidth * 0.04,
-                                ),
-                                child: Text(
-                                  "Blood Group :",
+                          child: name == null
+                              ? Text(
+                                  "Fetching Data...",
                                   style: GoogleFonts.meriendaOne(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
+                                    color: Color.fromRGBO(239, 44, 120, 1),
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: totalWidth * 0.02,
-                              ),
-                              myDropDown(
-                                [
-                                  'A+',
-                                  'A-',
-                                  'B+',
-                                  'B-',
-                                  'O+',
-                                  'O-',
-                                  'AB+',
-                                  'AB-',
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: totalWidth * 0.04,
-                                ),
-                                child: Text(
-                                  "Previous Donations :",
+                                )
+                              : Text(
+                                  name,
                                   style: GoogleFonts.meriendaOne(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
+                                    color: Color.fromRGBO(239, 44, 120, 1),
                                     fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: totalWidth * 0.02,
-                              ),
-                              myIntDropDown(
-                                [
-                                  0,
-                                  1,
-                                  2,
-                                  3,
-                                  4,
-                                  5,
-                                  6,
-                                  7,
-                                  8,
-                                  9,
-                                  10,
-                                  11,
-                                  12,
-                                  13,
-                                  14,
-                                  15,
-                                  16,
-                                  17,
-                                  18,
-                                  19,
-                                  20,
-                                  21,
-                                  22,
-                                  23,
-                                  24,
-                                  25,
-                                  26,
-                                  27,
-                                  28,
-                                  29,
-                                  30,
-                                  31,
-                                  32,
-                                  33,
-                                  34,
-                                  35,
-                                  36,
-                                  37,
-                                  38,
-                                  39,
-                                  40,
-                                  41,
-                                  42,
-                                  43,
-                                  44,
-                                  45,
-                                  46,
-                                  47,
-                                  48,
-                                  49,
-                                  50,
-                                  51,
-                                  52,
-                                  53,
-                                  54,
-                                  55,
-                                  56,
-                                  57,
-                                  58,
-                                  59,
-                                  60,
-                                  61,
-                                  62,
-                                  63,
-                                  64,
-                                  65,
-                                  66,
-                                  67,
-                                  68,
-                                  69,
-                                  70,
-                                  71,
-                                  72,
-                                  73,
-                                  74,
-                                  75,
-                                  76,
-                                  77,
-                                  78,
-                                  79,
-                                  80,
-                                  81,
-                                  82,
-                                  83,
-                                  84,
-                                  85,
-                                  86,
-                                  87,
-                                  88,
-                                  89,
-                                  90,
-                                  91,
-                                  92,
-                                  93,
-                                  94,
-                                  95,
-                                  96,
-                                  97,
-                                  98,
-                                  99,
-                                  100
-                                ],
-                              ),
-                            ],
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.02,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.04,
                           ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
+                          child: Text(
+                            "Select Profile Picture :",
+                            style: GoogleFonts.meriendaOne(
+                              color: Color.fromRGBO(239, 44, 120, 1),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          _chosenDonations != 0
-                              ? FadeIn(
-                                  0.7,
-                                  Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: totalWidth * 0.04,
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.02,
+                        ),
+                        Center(
+                          child: _image == null
+                              ? ClipOval(
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        height: 220.0,
+                                        width: 220.0,
+                                        child: Image(
+                                          image: AssetImage(
+                                              'assets/images/avatar.png'),
                                         ),
-                                        child: Text(
-                                          "Last Donation Date :",
-                                          style: GoogleFonts.meriendaOne(
-                                            color: Colors.black,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w600,
+                                      ),
+                                      Positioned(
+                                        bottom: totalHeight * 0.0,
+                                        child: Opacity(
+                                          opacity: 0.9,
+                                          child: Stack(
+                                            children: <Widget>[
+                                              Container(
+                                                height: 40.0,
+                                                width: 220.0,
+                                                color: Color.fromRGBO(
+                                                    239, 44, 120, 1),
+                                              ),
+                                              Positioned(
+                                                bottom: 3,
+                                                left: 95,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    getImage();
+                                                  },
+                                                  child: Icon(
+                                                    Icons.camera,
+                                                    color: Colors.white,
+                                                    size: 35,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: totalWidth * 0.03,
-                                      ),
-                                      _chosenDate == null
-                                          ? GestureDetector(
-                                              onTap: () {
-                                                showCalender();
-                                              },
-                                              child: Icon(
-                                                Icons.calendar_today,
-                                                size: 30.0,
-                                                color: Colors.pink,
-                                              ),
-                                            )
-                                          : Text(
-                                              "${_chosenDate.day}-${_chosenDate.month}-${_chosenDate.year}",
-                                              style: GoogleFonts.meriendaOne(
-                                                color: Colors.pink,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
                                     ],
                                   ),
                                 )
-                              : Container(),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: totalWidth * 0.04,
-                                ),
-                                child: Text(
-                                  "Thana :",
-                                  style: GoogleFonts.meriendaOne(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: totalWidth * 0.02,
-                              ),
-                              thanaDropDown([
-                                'Sadar',
-                                'Aditmari',
-                                'Kaliganj',
-                                'Hatibandha',
-                                'Patgram'
-                              ]),
-                            ],
-                          ),
-                          SizedBox(
-                            height: totalHeight * 0.02,
-                          ),
-                          Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                registerUser();
-                              },
-                              child: Container(
-                                height: totalHeight * 0.07,
-                                width: totalWidth * 0.5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromRGBO(239, 44, 120, 1),
-                                      Color.fromRGBO(237, 66, 101, 1),
+                              : ClipOval(
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        height: 220.0,
+                                        width: 220.0,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Image.file(_image),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: totalHeight * 0.0,
+                                        child: Opacity(
+                                          opacity: 0.9,
+                                          child: Stack(
+                                            children: <Widget>[
+                                              Container(
+                                                height: 40.0,
+                                                width: 220.0,
+                                                color: Color.fromRGBO(
+                                                    239, 44, 120, 1),
+                                              ),
+                                              Positioned(
+                                                bottom: 3,
+                                                left: 95,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    getImage();
+                                                  },
+                                                  child: Icon(
+                                                    Icons.camera,
+                                                    color: Colors.white,
+                                                    size: 35,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    "Register",
-                                    style: GoogleFonts.meriendaOne(
-                                      color: Colors.white,
-                                      fontSize: totalHeight * 0.026,
-                                      fontWeight: FontWeight.w600,
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.01,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: totalWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: totalWidth * 0.8,
+                            child: TextField(
+                              style: GoogleFonts.meriendaOne(
+                                color: Color.fromRGBO(239, 44, 120, 1),
+                                fontWeight: FontWeight.w600,
+                              ),
+                              controller: numberController,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color.fromRGBO(239, 44, 120, 1),
+                                  ),
+                                ),
+                                labelText: "Mobile Number",
+                                labelStyle: GoogleFonts.meriendaOne(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                hintText: "Visible to Moderators only",
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.01,
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: totalWidth * 0.04,
+                              ),
+                              child: Text(
+                                "Blood Group :",
+                                style: GoogleFonts.meriendaOne(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: totalWidth * 0.02,
+                            ),
+                            myDropDown(
+                              [
+                                'A+',
+                                'A-',
+                                'B+',
+                                'B-',
+                                'O+',
+                                'O-',
+                                'AB+',
+                                'AB-',
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.01,
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: totalWidth * 0.04,
+                              ),
+                              child: Text(
+                                "Previous Donations :",
+                                style: GoogleFonts.meriendaOne(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: totalWidth * 0.02,
+                            ),
+                            myIntDropDown(
+                              [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10,
+                                11,
+                                12,
+                                13,
+                                14,
+                                15,
+                                16,
+                                17,
+                                18,
+                                19,
+                                20,
+                                21,
+                                22,
+                                23,
+                                24,
+                                25,
+                                26,
+                                27,
+                                28,
+                                29,
+                                30,
+                                31,
+                                32,
+                                33,
+                                34,
+                                35,
+                                36,
+                                37,
+                                38,
+                                39,
+                                40,
+                                41,
+                                42,
+                                43,
+                                44,
+                                45,
+                                46,
+                                47,
+                                48,
+                                49,
+                                50,
+                                51,
+                                52,
+                                53,
+                                54,
+                                55,
+                                56,
+                                57,
+                                58,
+                                59,
+                                60,
+                                61,
+                                62,
+                                63,
+                                64,
+                                65,
+                                66,
+                                67,
+                                68,
+                                69,
+                                70,
+                                71,
+                                72,
+                                73,
+                                74,
+                                75,
+                                76,
+                                77,
+                                78,
+                                79,
+                                80,
+                                81,
+                                82,
+                                83,
+                                84,
+                                85,
+                                86,
+                                87,
+                                88,
+                                89,
+                                90,
+                                91,
+                                92,
+                                93,
+                                94,
+                                95,
+                                96,
+                                97,
+                                98,
+                                99,
+                                100
+                              ],
+                            ),
+                          ],
+                        ),
+                        _chosenDonations != 0
+                            ? FadeIn(
+                                0.7,
+                                Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: totalWidth * 0.04,
+                                      ),
+                                      child: Text(
+                                        "Last Donation Date :",
+                                        style: GoogleFonts.meriendaOne(
+                                          color: Colors.black,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
+                                    SizedBox(
+                                      width: totalWidth * 0.03,
+                                    ),
+                                    _chosenDate == null
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              showCalender();
+                                            },
+                                            child: Icon(
+                                              Icons.calendar_today,
+                                              size: 30.0,
+                                              color: Colors.pink,
+                                            ),
+                                          )
+                                        : Text(
+                                            "${_chosenDate.day}-${_chosenDate.month}-${_chosenDate.year}",
+                                            style: GoogleFonts.meriendaOne(
+                                              color: Colors.pink,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              )
+                            : Container(),
+                        SizedBox(
+                          height: totalHeight * 0.02,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: totalWidth * 0.04,
+                              ),
+                              child: Text(
+                                "Thana :",
+                                style: GoogleFonts.meriendaOne(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: totalWidth * 0.02,
+                            ),
+                            thanaDropDown([
+                              'Sadar',
+                              'Aditmari',
+                              'Kaliganj',
+                              'Hatibandha',
+                              'Patgram'
+                            ]),
+                          ],
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.02,
+                        ),
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (_image == null) {
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Error !!",
+                                  desc: "Please select a profile picture",
+                                  buttons: [
+                                    DialogButton(
+                                      color: Colors.pinkAccent,
+                                      child: Text(
+                                        "Okay",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
+                              } else if (numberController.value.text == null ||
+                                  numberController.value.text.length != 11) {
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Error !!",
+                                  desc: "Please give a valid mobile number",
+                                  buttons: [
+                                    DialogButton(
+                                      color: Colors.pinkAccent,
+                                      child: Text(
+                                        "Okay",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
+                              } else if (_chosenBloodGroup == null) {
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Error !!",
+                                  desc: "Please select your blood group",
+                                  buttons: [
+                                    DialogButton(
+                                      color: Colors.pinkAccent,
+                                      child: Text(
+                                        "Okay",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
+                              } else if (_chosenDonations != 0 &&
+                                  _chosenDate == null) {
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Error !!",
+                                  desc: "Select last donation date",
+                                  buttons: [
+                                    DialogButton(
+                                      color: Colors.pinkAccent,
+                                      child: Text(
+                                        "Okay",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
+                              } else if (_chosenThana == null) {
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "Error !!",
+                                  desc: "Select your thana",
+                                  buttons: [
+                                    DialogButton(
+                                      color: Colors.pinkAccent,
+                                      child: Text(
+                                        "Okay",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
+                              } else {
+                                registerUser();
+                              }
+                            },
+                            child: Container(
+                              height: totalHeight * 0.07,
+                              width: totalWidth * 0.5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromRGBO(239, 44, 120, 1),
+                                    Color.fromRGBO(237, 66, 101, 1),
+                                  ],
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Register",
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.white,
+                                    fontSize: totalHeight * 0.026,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: totalHeight * 0.02,
+                        ),
+                      ],
                     ),
                   ),
       ),

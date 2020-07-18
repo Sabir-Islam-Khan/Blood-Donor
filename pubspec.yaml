@@ -38,6 +38,7 @@ dependencies:
   flutter_native_splash: ^0.1.9
   page_transition: ^1.1.5
   firebase_storage: ^3.1.6
+  auto_size_text: ^2.1.0
   flutter_rounded_date_picker: ^1.0.0
 flutter_native_splash:
   image: assets/images/splash.png
@@ -65,6 +66,8 @@ flutter:
     - assets/images/facebookLogo.png
     - assets/images/donor.png
     - assets/images/avatar.png
+    - assets/images/tom.jpg
+    - assets/images/phone.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

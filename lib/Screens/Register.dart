@@ -66,11 +66,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       "lastDonation": lastDonationDate,
       "location": _chosenThana,
       "name": name,
+      "number": numberController.value.text,
     });
-
-    setState(() {
-      _isLoading = false;
-    });
+    getData();
   }
 
   String name;

@@ -58,7 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     StorageTaskSnapshot snapshot =
         await _storage.ref().child("$_uid").putFile(_image).onComplete;
     final String downloadUrl = await snapshot.ref.getDownloadURL();
-    await Firestore.instance.collection("Users").document(_uid).setData({
+    await Firestore.instance.collection("Donors").document(_uid).setData({
       'isRegistered': true,
       "profilePic": downloadUrl,
       "bloodGroup": _chosenBloodGroup,
@@ -67,6 +67,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       "location": _chosenThana,
       "name": name,
       "number": numberController.value.text,
+    });
+    await Firestore.instance.collection("Users").document(_uid).setData({
+      'isRegistered': true,
+      "name": name,
     });
     getData();
   }
@@ -77,6 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   int _chosenDonations = 0;
   String _chosenThana;
   bool isRegistered;
+  bool _isKeyboardEnabled = true;
   final numberController = TextEditingController();
   void getData() async {
     setState(() {
@@ -121,7 +126,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   // drop down for blood group
-  Widget myDropDown(List<String> items) {
+  Widget bloodGroupDropDown(List<String> items) {
     return DropdownButton<String>(
       dropdownColor: Color.fromRGBO(239, 44, 120, 1),
       value: _chosenBloodGroup,
@@ -146,13 +151,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       onChanged: (String value) {
         setState(() {
           _chosenBloodGroup = value;
+          _isKeyboardEnabled = false;
         });
       },
     );
   }
 
   //drop down for number of donations
-  Widget myIntDropDown(List<int> items) {
+  Widget totalDonationsDropDown(List<int> items) {
     return DropdownButton<int>(
       dropdownColor: Color.fromRGBO(239, 44, 120, 1),
       value: _chosenDonations,
@@ -426,6 +432,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           child: Container(
                             width: totalWidth * 0.8,
                             child: TextField(
+                              enabled: _isKeyboardEnabled,
                               style: GoogleFonts.meriendaOne(
                                 color: Color.fromRGBO(239, 44, 120, 1),
                                 fontWeight: FontWeight.w600,
@@ -470,7 +477,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             SizedBox(
                               width: totalWidth * 0.02,
                             ),
-                            myDropDown(
+                            bloodGroupDropDown(
                               [
                                 'A+',
                                 'A-',
@@ -505,7 +512,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             SizedBox(
                               width: totalWidth * 0.02,
                             ),
-                            myIntDropDown(
+                            totalDonationsDropDown(
                               [
                                 0,
                                 1,

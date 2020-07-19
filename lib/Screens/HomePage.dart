@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     double totalWidth,
   ) {
     return UserCard(
+      auth: widget.auth,
       totalWidth: totalWidth,
       totalHeight: totalHeight,
       ppUrl: doc.data["profilePic"],
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                                       .contains(
                                         searchText.toUpperCase(),
                                       ) ||
-                                  a.data['bloodGroup']
+                                  a.data['name']
                                       .toString()
                                       .toUpperCase()
                                       .contains(

@@ -1,8 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:blood_donation/Screens/Moderators.dart';
+import 'package:blood_donation/Services/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserCard extends StatelessWidget {
+  final Auth auth;
   final double totalWidth;
   final double totalHeight;
   final String ppUrl;
@@ -13,7 +16,8 @@ class UserCard extends StatelessWidget {
   final String location;
 
   UserCard(
-      {@required this.totalWidth,
+      {@required this.auth,
+      @required this.totalWidth,
       @required this.totalHeight,
       @required this.ppUrl,
       @required this.name,
@@ -197,10 +201,24 @@ class UserCard extends StatelessWidget {
                             maxLines: 1,
                           ),
                         ),
-                        Image(
-                          height: 25.0,
-                          width: 25.0,
-                          image: AssetImage('assets/images/phone.png'),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ModeratorScreen(
+                                  auth: this.auth,
+                                  totalHeight: this.totalHeight,
+                                  totalWidth: this.totalWidth,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Image(
+                            height: 25.0,
+                            width: 25.0,
+                            image: AssetImage('assets/images/phone.png'),
+                          ),
                         ),
                       ],
                     ),

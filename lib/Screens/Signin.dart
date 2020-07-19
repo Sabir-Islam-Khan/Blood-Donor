@@ -118,7 +118,6 @@ class _SignInState extends State<SignIn> {
         resizeToAvoidBottomPadding: false,
         // main body
 
-        // TODO: this is just core functionality. Have to change UI later
         body: loading == true
             ? Loading()
             : SingleChildScrollView(

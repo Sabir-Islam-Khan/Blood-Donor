@@ -49,7 +49,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
         // main body
 
-        // TODO: this is just core functionality. Have to change UI later
         body: isLoading == true
             ? Loading()
             : SingleChildScrollView(

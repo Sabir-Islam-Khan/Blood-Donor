@@ -15,11 +15,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Widget buildItem(
+    DocumentSnapshot doc,
+    BuildContext ctx,
+    double totalHeight,
+    double totalWidth,
+  ) {
+    return UserCard(
+      totalWidth: totalWidth,
+      totalHeight: totalHeight,
+      ppUrl: doc.data["profilePic"],
+      name: doc.data["name"],
+      bloodGroup: doc.data["bloodGroup"],
+      lastDonation: doc.data["lastDonation"],
+      totalDonation: "${doc.data["totalDonations"]}",
+      location: doc.data["location"],
+    );
+  }
+
   // mian method to fetch data
   Future<QuerySnapshot> getUsers() {
     return Firestore.instance.collection("Donors").getDocuments();
   }
 
+  String searchText;
   @override
   Widget build(BuildContext context) {
     // total height and width constrains
@@ -55,49 +74,107 @@ class _HomePageState extends State<HomePage> {
         ),
         endDrawer: CustomDrawer(auth: widget.auth),
         body: SingleChildScrollView(
-          child: FutureBuilder(
-            future: getUsers(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      color: Colors.pink[50],
-                      height: totalHeight * 1,
-                      width: totalWidth * 1,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return UserCard(
-                            totalWidth: totalWidth,
-                            totalHeight: totalHeight,
-                            ppUrl: snapshot
-                                .data.documents[index].data["profilePic"],
-                            name: snapshot.data.documents[index].data["name"],
-                            bloodGroup: snapshot
-                                .data.documents[index].data["bloodGroup"],
-                            lastDonation: snapshot
-                                .data.documents[index].data["lastDonation"],
-                            totalDonation:
-                                "${snapshot.data.documents[index].data["totalDonations"]}",
-                            location:
-                                snapshot.data.documents[index].data["location"],
-                          );
+          child: SafeArea(
+            // column for the whole body
+            child: Column(
+              children: [
+                // padding for title
+                // search box
+                SizedBox(
+                  height: totalHeight * 0.02,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 245, 249, 1),
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  height: totalHeight * 0.05,
+                  width: totalWidth * 0.94,
+                  child: TextField(
+                    onChanged: (text) {
+                      text = text.toUpperCase();
+
+                      setState(() {
+                        searchText = text;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search Keywords",
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                searchText == null
+                    ? SingleChildScrollView(
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: Firestore.instance
+                              .collection('Donors')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Column(
+                                children: snapshot.data.documents
+                                    .map((doc) => buildItem(
+                                          doc,
+                                          context,
+                                          totalHeight,
+                                          totalWidth,
+                                        ))
+                                    .toList(),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
+                      )
+                    : StreamBuilder<QuerySnapshot>(
+                        stream:
+                            Firestore.instance.collection('Donors').snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final results = snapshot.data.documents.where(
+                              (DocumentSnapshot a) =>
+                                  a.data['location']
+                                      .toString()
+                                      .toUpperCase()
+                                      .contains(
+                                        searchText.toUpperCase(),
+                                      ) ||
+                                  a.data['bloodGroup']
+                                      .toString()
+                                      .toUpperCase()
+                                      .contains(
+                                        searchText.toUpperCase(),
+                                      ) ||
+                                  a.data['bloodGroup']
+                                      .toString()
+                                      .toUpperCase()
+                                      .contains(
+                                        searchText.toUpperCase(),
+                                      ),
+                            );
+                            return Column(
+                              children: results
+                                  .map((doc) => buildItem(
+                                        doc,
+                                        context,
+                                        totalHeight,
+                                        totalWidth,
+                                      ))
+                                  .toList(),
+                            );
+                          } else {
+                            return SizedBox();
+                          }
                         },
                       ),
-                    ),
-                  ],
-                );
-              } else if (snapshot.connectionState == ConnectionState.none) {
-                return Text("No data");
-              }
-              return Container(
-                child: Center(
-                  child: Loading(),
+                SizedBox(
+                  height: totalHeight * 0.01,
                 ),
-              );
-            },
+              ],
+            ),
           ),
         ),
       ),

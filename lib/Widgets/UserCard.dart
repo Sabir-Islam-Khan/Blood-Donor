@@ -35,7 +35,8 @@ class UserCard extends StatelessWidget {
     Timestamp date = this.lastDonation;
 
     DateTime modified = date.toDate();
-
+    DateTime today = DateTime.now();
+    int compare = today.difference(modified).inDays;
     String lastDate = "${modified.day}-${modified.month}-${modified.year}";
     return Column(
       children: <Widget>[
@@ -151,15 +152,25 @@ class UserCard extends StatelessWidget {
                         Container(
                           width: totalWidth * 0.6,
                           // resizable text for blood group
-                          child: AutoSizeText(
-                            'Last Donation : $lastDate',
-                            style: GoogleFonts.meriendaOne(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 1,
-                          ),
+                          child: compare >= 110
+                              ? AutoSizeText(
+                                  'Last Donation : $lastDate',
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.greenAccent,
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 1,
+                                )
+                              : AutoSizeText(
+                                  'Last Donation : $lastDate',
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.white,
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 1,
+                                ),
                         ),
                         Container(
                           width: totalWidth * 0.6,

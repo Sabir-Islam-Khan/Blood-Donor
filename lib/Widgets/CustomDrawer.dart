@@ -133,6 +133,44 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ),
               SizedBox(
+                height: totalHeight * 0.03,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.leftToRight,
+                      child: TopDonors(auth: widget.auth),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: totalWidth * 0.04,
+                    ),
+                    Image(
+                      height: 55.0,
+                      width: 55.0,
+                      image: AssetImage('assets/images/add_donation.png'),
+                    ),
+                    SizedBox(
+                      width: totalWidth * 0.02,
+                    ),
+                    Text(
+                      "Add Donation",
+                      style: GoogleFonts.meriendaOne(
+                        fontSize: totalWidth * 0.05,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
                 height: totalHeight * 0.2,
               ),
               GestureDetector(

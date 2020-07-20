@@ -1,3 +1,4 @@
+import 'package:blood_donation/Screens/TopDonors.dart';
 import 'package:blood_donation/Services/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,6 +85,44 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                     Text(
                       "Register as a Donor",
+                      style: GoogleFonts.meriendaOne(
+                        fontSize: totalWidth * 0.05,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: totalHeight * 0.03,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.leftToRight,
+                      child: TopDonors(auth: widget.auth),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: totalWidth * 0.03,
+                    ),
+                    Image(
+                      height: 45.0,
+                      width: 45.0,
+                      image: AssetImage('assets/images/medal.png'),
+                    ),
+                    SizedBox(
+                      width: totalWidth * 0.02,
+                    ),
+                    Text(
+                      "Top Donors",
                       style: GoogleFonts.meriendaOne(
                         fontSize: totalWidth * 0.05,
                         color: Colors.white,

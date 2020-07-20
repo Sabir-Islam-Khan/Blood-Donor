@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blood_donation/Screens/Moderators.dart';
 import 'package:blood_donation/Services/Auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,22 +12,31 @@ class UserCard extends StatelessWidget {
   final String ppUrl;
   final String name;
   final String bloodGroup;
-  final String lastDonation;
+  final Timestamp lastDonation;
   final String totalDonation;
   final String location;
-
-  UserCard(
-      {@required this.auth,
-      @required this.totalWidth,
-      @required this.totalHeight,
-      @required this.ppUrl,
-      @required this.name,
-      @required this.bloodGroup,
-      @required this.lastDonation,
-      @required this.totalDonation,
-      @required this.location});
+  final String pageName;
+  final int index;
+  UserCard({
+    @required this.auth,
+    @required this.totalWidth,
+    @required this.totalHeight,
+    @required this.ppUrl,
+    @required this.name,
+    @required this.bloodGroup,
+    @required this.lastDonation,
+    @required this.totalDonation,
+    @required this.location,
+    @required this.pageName,
+    @optionalTypeArgs this.index,
+  });
   @override
   Widget build(BuildContext context) {
+    Timestamp date = this.lastDonation;
+
+    DateTime modified = date.toDate();
+
+    String lastDate = "${modified.day}-${modified.month}-${modified.year}";
     return Column(
       children: <Widget>[
         SizedBox(
@@ -97,6 +107,21 @@ class UserCard extends StatelessWidget {
                     ),
                     Column(
                       children: <Widget>[
+                        this.pageName == "TopDonors"
+                            ? Container(
+                                width: totalWidth * 0.6,
+                                // resizable text for name
+                                child: AutoSizeText(
+                                  "Rank : ${index + 1}",
+                                  style: GoogleFonts.meriendaOne(
+                                    color: Colors.pink[900],
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 1,
+                                ),
+                              )
+                            : Container(),
                         Container(
                           width: totalWidth * 0.6,
                           // resizable text for name
@@ -127,7 +152,7 @@ class UserCard extends StatelessWidget {
                           width: totalWidth * 0.6,
                           // resizable text for blood group
                           child: AutoSizeText(
-                            'Last Donation : ${this.lastDonation}',
+                            'Last Donation : $lastDate',
                             style: GoogleFonts.meriendaOne(
                               color: Colors.white,
                               fontSize: 13.0,

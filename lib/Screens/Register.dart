@@ -49,8 +49,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void registerUser() async {
     User _user = await widget.auth.currentUser();
     String _uid = _user.uid;
-    String lastDonationDate =
-        "${_chosenDate.day}-${_chosenDate.month}-${_chosenDate.year}";
     print("UID IS ******* $_uid");
     setState(() {
       _isLoading = true;
@@ -63,7 +61,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       "profilePic": downloadUrl,
       "bloodGroup": _chosenBloodGroup,
       "totalDonations": _chosenDonations,
-      "lastDonation": lastDonationDate,
+      "lastDonation": _chosenDate,
       "location": _chosenThana,
       "name": name,
       "number": numberController.value.text,

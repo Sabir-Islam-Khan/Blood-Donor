@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       lastDonation: doc.data["lastDonation"],
       totalDonation: "${doc.data["totalDonations"]}",
       location: doc.data["location"],
+      pageName: "HomePage",
     );
   }
 

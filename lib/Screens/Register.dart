@@ -702,16 +702,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   context: context,
                                   type: AlertType.error,
                                   title: "Error !!",
-                                  desc: "Please select a profile picture",
+                                  desc: "User not Found. Check credentials !",
                                   buttons: [
                                     DialogButton(
-                                      color: Colors.pinkAccent,
+                                      color: Color.fromRGBO(239, 44, 120, 1),
                                       child: Text(
                                         "Okay",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
                                       width: 120,
                                     )
                                   ],
@@ -731,11 +733,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
                                       width: 120,
                                     )
                                   ],
                                 ).show();
+                                setState(() {
+                                  _isKeyboardEnabled = true;
+                                });
                               } else if (_chosenBloodGroup == null) {
                                 Alert(
                                   context: context,
@@ -750,7 +757,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
                                       width: 120,
                                     )
                                   ],
@@ -770,7 +779,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
                                       width: 120,
                                     )
                                   ],
@@ -789,7 +800,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
                                       width: 120,
                                     )
                                   ],
